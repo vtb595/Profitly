@@ -321,8 +321,8 @@ docker-compose down
 
 * Oliver lfq502
 * Chris vtb595
-* Ziad
-* Seb
+* Ziad qpd834
+* Seb xmz167
 
 ---
 
