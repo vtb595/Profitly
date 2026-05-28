@@ -95,6 +95,49 @@ git clone https://github.com/vtb595/Profitly.git
 cd Profitly
 ```
 
+Depending on how the project was downloaded, there may be **two project folders**.
+
+For example, after opening the first folder, the project may contain another folder called `profitly` or `Profitly`.
+
+To check this, run:
+
+```bash
+ls
+```
+
+If you see another project folder, open that folder as well. For example:
+
+```bash
+cd profitly
+```
+
+or, if the folder name uses a capital letter:
+
+```bash
+cd Profitly
+```
+
+The important thing is that you must be in the folder where `docker-compose.yml` is located.
+
+You can check this by running:
+
+```bash
+ls
+```
+
+You should see something like:
+
+```bash
+docker-compose.yml
+Dockerfile
+app
+database
+requirements.txt
+README.md
+```
+
+If you do not see `docker-compose.yml`, you are not in the correct folder yet.
+
 ---
 
 ## 3. Start Docker Desktop
@@ -105,7 +148,13 @@ Make sure Docker Desktop is running before continuing.
 
 # Compilation / Execution Instructions
 
-Run the following command in the terminal:
+When you are in the folder containing `docker-compose.yml`, run:
+
+```bash
+docker compose up --build
+```
+
+If this command does not work, try the older Docker Compose command:
 
 ```bash
 docker-compose up --build
@@ -118,11 +167,32 @@ This command will:
 * initialize the SQL tables
 * start the containers
 
+If the terminal returns to the prompt immediately, or if the website does not open, try running the containers in detached mode:
+
+```bash
+docker compose up --build -d
+```
+
+You can check whether the containers are running with:
+
+```bash
+docker compose ps
+```
+
+You should see that the containers are marked as running.
+
+If the application still does not work, you can restart everything with:
+
+```bash
+docker compose down
+docker compose up --build
+```
+
 ---
 
 # Open the Application
 
-Open the browser and go to:
+When the containers are running, open the browser and go to:
 
 ```bash
 http://localhost:5050
@@ -234,6 +304,12 @@ CTRL + C
 ```
 
 To stop Docker completely:
+
+```bash
+docker compose down
+```
+
+If your Docker setup uses the older command, use:
 
 ```bash
 docker-compose down
