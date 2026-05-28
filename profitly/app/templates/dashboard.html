@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Profitly</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="nav-logo">
+        Profitly
+    </div>
+
+    <div class="nav-links">
+        Portfolio
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <!-- TOP SECTION -->
+
+    <div class="top-section">
+
+        <div class="portfolio-summary">
+
+            <p class="summary-label">
+                Total Portfolio Value
+            </p>
+
+            <h1>
+                ${{ total_value }}
+            </h1>
+
+            <p class="portfolio-change">
+                +2.41% today
+            </p>
+
+        </div>
+
+        <div class="market-box">
+
+            <h3>Market Status</h3>
+
+            <p>
+                US Market Closed
+            </p>
+
+            <div class="market-stats">
+
+                <div>
+                    <span>S&P 500</span>
+                    <strong>+0.42%</strong>
+                </div>
+
+                <div>
+                    <span>NASDAQ</span>
+                    <strong>+0.88%</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- CHART -->
+
+    <div class="chart-container">
+
+        <div class="chart-header">
+
+            <h2>Portfolio Performance</h2>
+
+            <p>Last 12 months</p>
+
+        </div>
+
+        <canvas id="portfolioChart"></canvas>
+
+    </div>
+
+    <!-- EXTRA DASHBOARD SECTION -->
+
+    <div class="dashboard-row">
+
+        <!-- WATCHLIST -->
+
+        <div class="watchlist-box">
+
+            <h2>Watchlist</h2>
+
+            <div class="watch-item">
+                <span>TSLA</span>
+                <strong>+2.4%</strong>
+            </div>
+
+            <div class="watch-item">
+                <span>AAPL</span>
+                <strong>+1.1%</strong>
+            </div>
+
+            <div class="watch-item">
+                <span>NVDA</span>
+                <strong>+4.7%</strong>
+            </div>
+
+            <div class="watch-item">
+                <span>META</span>
+                <strong>-0.8%</strong>
+            </div>
+
+        </div>
+
+        <!-- MARKET NEWS -->
+
+        <div class="news-box">
+
+            <h2>Market News</h2>
+
+            <div class="news-item">
+                NVIDIA rises after strong AI demand
+            </div>
+
+            <div class="news-item">
+                Apple announces new chip strategy
+            </div>
+
+            <div class="news-item">
+                Tesla rebounds after earnings
+            </div>
+
+            <div class="news-item">
+                Nasdaq closes higher for third day
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- HOLDINGS -->
+
+    <h2 class="portfolio-title">
+        Your Holdings
+    </h2>
+
+    <div class="stocks-grid">
+
+        {% for stock in stocks %}
+
+        <div class="stock-card">
+
+            <div class="stock-top">
+
+                <h2>{{ stock.ticker }}</h2>
+
+                <p class="shares">
+                    {{ stock.shares }} shares
+                </p>
+
+            </div>
+
+            <div class="stock-price">
+                ${{ stock.price }}
+            </div>
+
+            <div class="position-value">
+                Position: ${{ stock.value }}
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- CHART.JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctx = document.getElementById('portfolioChart');
+
+const chartData = JSON.parse('{{ chart_data | tojson | safe }}');
+
+new Chart(ctx, {
+
+    type: 'line',
+
+    data: {
+
+        labels: [
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May'
+        ],
+
+        datasets: [{
+
+            label: 'Portfolio Value',
+
+            data: chartData,
+
+            borderColor: '#22d3ee',
+
+            backgroundColor: 'rgba(34, 211, 238, 0.1)',
+
+            fill: true,
+
+            tension: 0.4
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        plugins: {
+
+            legend: {
+                display: false
+            }
+
+        },
+
+        scales: {
+
+            x: {
+
+                ticks: {
+                    color: 'white'
+                },
+
+                grid: {
+                    color: '#334155'
+                }
+
+            },
+
+            y: {
+
+                ticks: {
+                    color: 'white'
+                },
+
+                grid: {
+                    color: '#334155'
+                }
+
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
+
