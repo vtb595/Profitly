@@ -62,8 +62,19 @@ PROFITLY/
 │
 ├── docker-compose.yml
 ├── Dockerfile
-└── README.md
+├── README.md
+├── E-R_diagram.docx
+└── KU_AI_declaration_EN.docx
 ```
+
+---
+
+# Documentation Files
+
+The repository also includes the following documentation files:
+
+* `E-R_diagram.docx` - contains the E/R diagram and explanation of the database model
+* `KU_AI_declaration_EN.docx` - contains the AI declaration for the project
 
 ---
 
@@ -253,11 +264,23 @@ After login, the user can:
 
 ---
 
+# E/R Diagram and Database Model
+
+The E/R diagram is included in the repository as `E-R_diagram.docx`.
+
+The diagram shows the main data model behind the Profitly application. The central entities are User, Portfolio, Holding, Stock, WatchlistItem, NewsItem, MarketIndex, and PerformanceRecord.
+
+The application has two main pages: a login page and a dashboard page. The dashboard combines several parts of the data model, including the user’s portfolio, holdings, stock information, watchlist, market news, market status, and performance graph.
+
+In the implemented database, the main physical tables are `users` and `portfolio`. Other information, such as live stock prices, market data, news, and portfolio performance, is shown on the dashboard using application logic and external data from Yahoo Finance. Therefore, the E/R diagram represents the overall conceptual data model of the application, while the current database implementation is a simplified prototype.
+
+---
+
 # Database
 
 The project uses PostgreSQL.
 
-The database contains two tables:
+The database contains two main physical tables:
 
 ## users
 
@@ -331,3 +354,5 @@ docker-compose down
 This project was created as a student project and prototype.
 
 The stock prices depend on Yahoo Finance and may vary depending on market opening hours.
+
+The repository includes both the E/R diagram and the AI declaration as separate documentation files.
