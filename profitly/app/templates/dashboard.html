@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Profitly</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<nav>
+
+    <div class="nav-logo">
+        Profitly
+    </div>
+
+    <div class="nav-links">
+        Portfolio
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <div class="top-section">
+
+        <div class="portfolio-summary">
+
+            <p class="summary-label">
+                Portfolio Value
+            </p>
+
+            <h1>
+                ${{ total_value }}
+            </h1>
+
+            <p class="portfolio-change">
+                {{ daily_change }}% today
+            </p>
+
+        </div>
+
+        <div class="market-box">
+
+            <h3>Market</h3>
+
+            <p>
+                US Market {{ market_status }}
+            </p>
+
+            <div class="market-stats">
+
+                <div>
+                    <span>S&P 500</span>
+                    <strong>{{ sp500_change }}%</strong>
+                </div>
+
+                <div>
+                    <span>NASDAQ</span>
+                    <strong>{{ nasdaq_change }}%</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="watchlist-box">
+
+            <h3>Watchlist</h3>
+
+            {% for item in watchlist %}
+
+            <div class="watch-item">
+                <span>{{ item.ticker }}</span>
+                <strong>{{ item.change }}%</strong>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <div class="chart-container">
+
+        <div class="chart-header">
+
+            <h2>Performance</h2>
+
+            <p>12 Months</p>
+
+        </div>
+
+        <canvas id="portfolioChart"></canvas>
+
+    </div>
+
+    <div class="holdings-table-container">
+
+        <h2>Your Holdings</h2>
+
+        <table class="holdings-table">
+
+            <thead>
+
+                <tr>
+                    <th>Ticker</th>
+                    <th>Shares</th>
+                    <th>Price</th>
+                    <th>Position Value</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for stock in stocks %}
+
+                <tr>
+
+                    <td>{{ stock.ticker }}</td>
+
+                    <td>{{ stock.shares }}</td>
+
+                    <td>${{ stock.price }}</td>
+
+                    <td>${{ stock.value }}</td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctx = document.getElementById('portfolioChart');
+
+const chartData = JSON.parse('{{ chart_data | tojson | safe }}');
+
+new Chart(ctx, {
+
+    type: 'line',
+
+    data: {
+
+        labels: [
+            'Jun','Jul','Aug','Sep',
+            'Oct','Nov','Dec','Jan',
+            'Feb','Mar','Apr','May'
+        ],
+
+        datasets: [{
+
+            data: chartData,
+
+            borderColor: '#22d3ee',
+
+            backgroundColor: 'rgba(34,211,238,0.08)',
+
+            fill: true,
+
+            tension: 0.3
+
+        }]
+
+    },
+
+    options: {
+
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+
+        scales: {
+
+            x: {
+                ticks: { color: 'white' },
+                grid: { color: '#334155' }
+            },
+
+            y: {
+                ticks: { color: 'white' },
+                grid: { color: '#334155' }
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
+

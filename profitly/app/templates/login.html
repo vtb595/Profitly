@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Profitly</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <h1 class="logo">Profitly</h1>
+
+    <p class="subtitle">
+        Simple portfolio tracking
+    </p>
+
+    <form method="POST" class="login-form">
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+        >
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+        >
+
+        <button type="submit">
+            Login
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>
+
